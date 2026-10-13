@@ -1,0 +1,280 @@
+! Title: Mobile News Reading
+! Expires: 1 day
+! Version: 2026.10.13.2
+! Homepage: https://github.com/obitusde/ublock-filter
+! ==============================================================================
+! uBlock Origin Filterliste - Mobile News Reading Focus
+! Sortierung: nach Domain, Ungetestetes am Ende
+! ==============================================================================
+! Legende: "verifiziert" = live an echten Seiten geprueft (Trefferzahl, kein
+! Artikeltext betroffen). "nicht reproduzierbar" = Regel stammt vom Nutzer
+! (Element-Picker am Handy), liess sich in der Sandbox nicht nachstellen
+! (eingeloggt/Consent/A-B-Test) - bleibt drin, solange nichts dagegen spricht.
+! ==============================================================================
+
+! Pruefregeln und Seitenwissen fuer Claude: siehe CLAUDE.md im Repo.
+! ==============================================================================
+
+! --- 20min.ch (verifiziert 27.08.2026) ---
+www.20min.ch,20min.ch##footer
+www.20min.ch,20min.ch###ratingSection
+www.20min.ch,20min.ch###atspace-left
+www.20min.ch,20min.ch###atspace-right
+www.20min.ch,20min.ch##.sc-c2c20e8d-0
+www.20min.ch,20min.ch##.sc-ba430ca-7
+www.20min.ch##.etPrkr.sc-64e45e7-0
+www.20min.ch##.cTvCnk.sc-f22ec29a-1
+! Leeres Kommentar-Drawer-Panel (Ersatz fuer altes #commentSection)
+www.20min.ch,20min.ch###commentsDrawer
+! "Mehr zu diesem Thema"-Box, Autoren-Bio, Umfrage-Widget
+www.20min.ch,20min.ch##.sc-9b8b1172-0
+www.20min.ch,20min.ch##.sc-f19a47c0-0
+www.20min.ch,20min.ch##.sc-c0e0cae7-0
+! WhatsApp-Kanal-Werbebox und "Kommentarfeld deaktiviert"-Hinweis. Beide nutzen
+! dieselbe generische InfoBox-Komponente wie die "Darum gehts"-Zusammenfassung,
+! die bewusst NICHT gefiltert wird (echter Inhalt) - daher Unterscheidung ueber
+! Icon (info-box-bell) bzw. Text statt der Wrapper-Klasse.
+www.20min.ch,20min.ch##div[data-testid="InfoBox"]:has(use[href*="info-box-bell"])
+www.20min.ch,20min.ch##div[data-testid="InfoBox"]:has-text("Kommentarfeld deaktiviert")
+! Tote Regeln entfernt 27.08.2026: [class*="TeaserSection_section__"],
+! .ob-sub-units, [id^="outbrain_widget"], #commentSection
+! Franzoesische Ausgabe (/fr, anderer Build mit anderen Hash-Klassen):
+! "D'autres articles a lire" am Artikelende (1 Treffer, isoliert)
+www.20min.ch,20min.ch##.itHnfa.sc-c0978c16-0
+! Lesefortschritts-Balken (fixierter, leerer Wrapper unter dem Header), vom
+! Nutzer am echten Geraet entdeckt (1 Treffer, textLen 0)
+www.20min.ch,20min.ch##.sc-835cd513-6
+
+! --- anibis.ch ---
+! Hash-Klassen der MUI-Plattform (gleiche wie bei tutti.ch), brechen bei Redeploy.
+! Nicht reproduzierbar (Nutzer 23.09. / 11.10.): 1x1x4w3, xtxbqo
+anibis.ch##.mui-style-1x1x4w3.MuiBox-root
+anibis.ch##.mui-style-xtxbqo.MuiBox-root
+! Neu 13.10.2026, verifiziert: Block "Aehnliche Suchanfragen" unten auf jeder
+! Inseratsliste (12/12 Listen, 1 Treffer, nur Links)
+anibis.ch##.mui-style-t4u9pe.MuiBox-root
+
+! --- digitec.ch (verifiziert 27.08.2026, ergaenzt 13.10.2026) ---
+! Bleibt sichtbar: Artikeltitel + kompletter Fliesstext inkl. Bilder.
+! "header" entfernt auch die "Zur App / Schneller finden und bestellen"-
+! Nagbanner ganz oben, da diese im selben <header>-Element sitzt.
+digitec.ch##header
+digitec.ch###pageFooter
+! Autoren-Box + "Thema folgen"-Buttons direkt unter dem Artikeltext
+digitec.ch##.yJuh6LU
+! "Dieser Artikel gefaellt mir"-Like-Widget
+digitec.ch##.yOwfOx2
+! "Weitere Beitraege aus dem Magazin"-Karussell und Kommentarbereich - beide
+! nutzen dieselbe generische Section-Klasse wie der Artikeltext selbst, daher
+! ueber Geschwister-Position (:nth-of-type) statt der Klasse allein isoliert.
+digitec.ch##.yd6GJaF > section.yI0wRwL:nth-of-type(2)
+digitec.ch##.yd6GJaF > section.yI0wRwL:nth-of-type(3)
+! Eingeschobene Artikel-Teaserkarten im Fliesstext (Nutzer 16.09.), verifiziert
+! 13.10.: 0-3 Treffer pro Artikel, keine <p>, 87-163 Zeichen, Text bleibt.
+digitec.ch##section.yI0wRwL > .ylyXkc41
+! Nutzer 16.09., NICHT bestaetigt: 0 Treffer auf Start-, Magazin-, Artikel-,
+! Such- und Warenkorbseite. Nur das aehnliche "yVsAy411" existiert (leerer
+! Platzhalter ueber der Fusszeile). Evtl. neuer Hash - bei Bedarf neu picken.
+digitec.ch##.yVsAy41
+! ACHTUNG: alle y*-Klassen sind gehashte CSS-Modul-Klassen und koennen sich bei
+! jedem digitec-Redeploy aendern. "header" und "#pageFooter" sind stabil.
+
+! --- golem.de (verifiziert 27.08.2026, ergaenzt 13.10.2026) ---
+golem.de##.go-footer
+golem.de##.go-toolbar
+golem.de##[class*="go-button-bar--cta"]
+golem.de##.go-teaser-block--nextread
+golem.de##.go-teaser-block--career
+golem.de##.go-grid--50-50.go-grid
+golem.de##.go-tag-list__tags
+! "Weiterlesen"-Teaser-Grid am Artikelende (Nutzer 17.09.)
+golem.de##.go-grid--full-content.go-grid > .go-teaser-container
+! Generische Bilder raus: figure.go-media ist der Wrapper fuer JEDES Artikelbild
+! (auch echte Redaktions-/Agenturfotos), daher Unterscheidung ueber den
+! Credit-Text der Bildunterschrift. Live verifiziert 13.10. (Pexels, Getty,
+! KI-generiert, 40 Artikel). Getty Images bewusst dabei (Nutzerwunsch), obwohl
+! Getty auch echte Agenturfotos (z.B. AFP) vertreibt - kann im Einzelfall auch
+! ein echtes Pressefoto mit entfernen.
+golem.de##figure.go-media:has-text("Pixabay")
+golem.de##figure.go-media:has-text("Shutterstock")
+golem.de##figure.go-media:has-text("iStock")
+golem.de##figure.go-media:has-text("Adobe Stock")
+golem.de##figure.go-media:has-text("Unsplash")
+golem.de##figure.go-media:has-text("Pexels")
+golem.de##figure.go-media:has-text("Freepik")
+golem.de##figure.go-media:has-text("Getty Images")
+golem.de##figure.go-media:has-text("KI-generiert")
+golem.de##figure.go-media:has-text("(erzeugt mit")
+! Eigenwerbung als kursiver Absatz am Artikelende (13.10.2026, verifiziert, je
+! nur dieser eine Absatz: 195/163/339 Zeichen). Ueber Link-Ziel statt Text, weil
+! p.go-article-end auch der echte letzte Textabsatz sein kann.
+! Community-Einladung ("Wir oeffnen unsere neue Community ...")
+golem.de##p:has(> em > a[href*="community.golem.de/invites"])
+! Karrierewelt-Newsletter-Rabatt
+golem.de##p:has(> em > a[href*="karrierewelt.golem.de/pages/golem-karrierewelt-newsletter"])
+! E-Paper-Shop-Hinweis
+golem.de##p:has(> em > a[href*="service.golem.de/products/shop"])
+
+! --- heise.de (verifiziert 26.08.2026, ergaenzt 22.09.2026) ---
+heise.de##.footer
+heise.de##.article-footer
+heise.de##.article-layout__footer
+heise.de##.footer__list
+heise.de###article-page-upscore
+heise.de###wtma_teaser_ho_vertrieb_inline_branding
+heise.de##.a-u-inline
+heise.de##.ho-text.ho-bg.shadow-modules.z-50
+! Kopfbereich (Logo, Anmelden, Suche)
+heise.de##header.theme-ho
+! Fixierter heise+-Abo-Werbebalken unten rechts
+heise.de##a-sticky-footer
+! Wildcard match replacing static image URL string
+||heise.cloudimg.io/*/Fallback_KI-Update_*$image
+! Navigationsleiste unten (Nutzer 09.09.)
+heise.de##.nav-bottom
+! Hinweis-/Notice-Box (<details>), verifiziert 22.09.: 1 Treffer, isoliert
+heise.de##.a-u-mb-2.a-box--notice.a-box--full-bordered.a-box.notice-banner
+! Bestenlisten & Kaufberatung am Artikelende: section:has(...)-Variante
+! entfernt (kein <section> mehr, 0 Treffer). Die div.a-layout-Variante trifft
+! sauber nur die "Beliebte Bestenlisten"-Box, keine Artikelabsaetze.
+heise.de##div.a-layout:has(h2:has-text("Bestenliste"))
+heise.de##[class*="bestenliste"]
+
+! --- srf.ch (verifiziert & korrigiert 27.08.2026, ergaenzt 13.10.2026) ---
+! Bleibt sichtbar: Titel/Lead/Autor (header.article-header) und der komplette
+! Fliesstext inkl. Bilder, Zwischentitel, Zitate, aufklappbare Infoboxen
+! (section.articlepage__article-content). .expandable-box NICHT blocken -
+! das sind Infoboxen im Artikeltext selbst, kein Rauschen.
+srf.ch##header.masthead
+srf.ch##footer.footer
+srf.ch##.js-player-modal
+srf.ch##.modal.js-modal
+srf.ch##.articlepage__breadcrumbs
+srf.ch##.articlepage__sharing-bar
+srf.ch##.modal-flyout--in-content
+srf.ch##.articlepage__shimmer-box
+srf.ch##.articlepage__topmedia
+srf.ch##.player-widget
+srf.ch##.podcast-box
+srf.ch##.articlepage__reference
+srf.ch##.articlepage__banner-container
+srf.ch##.js-mehr-zum-thema
+srf.ch##.js-srf-newsletter
+! BUGFIX 27.08.2026: .collection.js-collection allein hat auf der SRF-
+! Startseite fast die ganze Seite geloescht (17 Treffer dort). .js-autobox-
+! collection trifft nur die automatische "Meistgelesene Artikel"-Box.
+srf.ch##.js-autobox-collection
+! Neu 13.10.2026, verifiziert (40 Artikel): "Diskutieren Sie mit:" =
+! Ueberschrift + Diskussions-Embed (iframe dialog.srf.ch) mitten im Artikel.
+! .article-element--bleed allein NICHT nutzbar (auch fuer andere Embeds/Bilder),
+! daher ueber den Embed-Titel eingegrenzt.
+srf.ch##h3.article-subheading:has-text("Diskutieren Sie mit")
+srf.ch##.article-element--bleed:has(.js-cmp-embed[data-cmp-protected-embed*="Diskutieren Sie mit"])
+
+! --- tagesschau.de (bereinigt & ergaenzt 26.08.2026) ---
+! Kopfbereich, Fusszeile, Sendungshinweis, Autorenzeile, Teilen-Buttons unten
+tagesschau.de##header.header
+tagesschau.de##.footer
+tagesschau.de##.sendungsbezug
+tagesschau.de##.buttongroup
+tagesschau.de##.authorline__inner
+! Themen-Tags am Artikelende
+tagesschau.de##.meldungsfooter
+! Artikel-Empfehlungen mitten im Text (Inline-Video-Teaser), ohne die
+! Textbody-Wrapper zu treffen
+tagesschau.de##.copytext-element-wrapper:has(.teaser)
+tagesschau.de##.copytext-element-wrapper:has([class*="teaser"])
+tagesschau.de##.copytext-element-wrapper:has(aside)
+tagesschau.de##.copytext-element-wrapper:has(.linklist)
+! "Mehr zum Thema" / "Mehr von <Autor>" am Artikelende - nur die
+! div[class*=columns]-Variante trifft auf der aktuellen Struktur wirklich
+! (alte .copytext-element-wrapper:has-text / section:has-Varianten: 0 Treffer)
+tagesschau.de##div[class*="columns"]:has-text("Mehr zum Thema")
+tagesschau.de##div[class*="columns"]:has-text("Mehr von")
+tagesschau.de##.teaser-list
+
+! --- thelausanneguide.com (verifiziert 13.10.2026) ---
+! Trifft die komplette Fusszeile inkl. Newsletter-Anmeldung (24/24 Seiten,
+! 1 Treffer, kein Artikeltext). Nutzer-Regel (31.08.) mit Tailwind-Klassen und
+! darunter die stabilere Variante (es gibt pro Seite nur ein <footer>).
+thelausanneguide.com##.md\:py-base-lg.md\:px-base-md.py-base-md.px-base.bg-geneva-teal-10
+thelausanneguide.com##footer
+
+! --- toppreise.ch (verifiziert 13.10.2026) ---
+! Leerer mobiler Werbeplatz oben (div#advertising_mobile, 250px). 1 Treffer auf
+! Kategorieseiten (40 geprueft), 0 auf der Startseite. Nutzer-Regel (23.09.)
+! und die stabilere ID-Variante fuer dasselbe Element.
+toppreise.ch###tpFrame > .d-md-none
+toppreise.ch###advertising_mobile
+
+! --- tutti.ch (27.08.2026 per Element-Picker am Geraet, ergaenzt 13.10.2026) ---
+! Alte generische Regeln ([class*="phishing"] etc.) entfernt (griffen nicht
+! mehr). ACHTUNG: MUI/Emotion-Hash-Klassen aendern sich potenziell bei jedem
+! Tutti-Redeploy - nach groesseren Aenderungen an der Seite erneut pruefen.
+! Nicht reproduzierbar in der Sandbox (Nutzer 27.08. / 09.10.): 6ka9oi, 1x1x4w3,
+! xtxbqo
+tutti.ch##.e1vcw3q50.mui-style-6ka9oi
+tutti.ch##.mui-style-1x1x4w3.MuiBox-root
+tutti.ch##.mui-style-xtxbqo.MuiBox-root
+! Verifiziert 13.10.: Block "Aehnliche Suchanfragen" unten auf jeder
+! Inseratsliste (14/14 Listen, 1 Treffer, nur Links, keine Inserate)
+tutti.ch##.mui-style-t4u9pe.MuiBox-root
+
+! --- zeit.de (verifiziert 27.08.2026, ergaenzt 22.09.2026) ---
+zeit.de##.footer
+zeit.de##.comment-section
+zeit.de##.topicbox
+zeit.de##.article-tags__list
+zeit.de##.summy__feedback
+zeit.de##.summy-muted-notice
+zeit.de##.zps-widget
+! Newsletter-Anmeldebox mitten im Fliesstext (aside, isoliert)
+zeit.de##.newsletter-signup
+! "NS-Akten"-Rechercheservice-Box (Angehoerige in der NSDAP-Kartei suchen)
+! mitten im Fliesstext. Verifiziert 22.09. (eingeloggt, Z+-Artikel): 1 Treffer,
+! 247 Zeichen, kein Artikeltext. Klassenname enthaelt "NSDAP", sehr stabil.
+zeit.de##.zoner-injection-NSDAP
+! Nutzer 21.09.: am eigenen Geraet per Screenshot bestaetigt. In der Sandbox
+! 22.09. an zwei Artikeln 0 Treffer (A/B-Test o.ae.) - bewusst behalten.
+zeit.de##.volume-teaser
+! Tote Regeln entfernt 27.08.2026: .jobbox-ticker, [class*="zoner-injection"]
+
+! ==============================================================================
+! UNGETESTET / NICHT BESTAETIGT (nach Domain sortiert)
+! Regeln stammen aus frueheren Sessions oder liessen sich in der Sandbox nicht
+! pruefen. Koennen durch Redesigns tot oder zu breit/schmal sein.
+! ==============================================================================
+
+! --- allmusic.com (ungetestet) ---
+allmusic.com###basicInfoMeta
+
+! --- bib-ostschweiz-genios-de.kb.ezproxy3.sg.ch (ungetestet, Nutzer 23.08.) ---
+bib-ostschweiz-genios-de.kb.ezproxy3.sg.ch###modal_content > .footer
+
+! --- catalogue.nla.gov.au (National Library of Australia, ungetestet) ---
+catalogue.nla.gov.au##.footer-ask-a-librarian
+catalogue.nla.gov.au##.alert-info
+
+! --- focus.de (ungetestet) ---
+focus.de##[class*="dockInnerWrapper"]
+
+! --- gmx.net (Nutzer 05.10., nicht bestaetigt) ---
+! Sandbox sieht nur die Consent-Wall (zustimmen oder bezahlen), Banner nicht
+! pruefbar. Name "regbanner" ist sprechend, Risiko gering.
+gmx.net##.regbanner
+
+! --- portfolio.sharesight.com (ungetestet) ---
+portfolio.sharesight.com##[class*="Boxstyled__Box"]
+
+! --- script.google.com (Google Apps Script, ungetestet) ---
+script.google.com##.warning-banner-bar
+
+! --- stern.de (Nutzer 23.09., nicht bestaetigt) ---
+! Weder in 20 Artikeln noch live gefunden - wohl erst per JavaScript
+! eingeblendet (Bezahl-Hinweis). Name passt zum Zweck, Risiko gering.
+stern.de##.paid-toaster__container--visible.paid-toaster__container
+
+! --- sueddeutsche.de (ungetestet) ---
+sueddeutsche.de##.sz-global-footer
+sueddeutsche.de##[role="contentinfo"]
+sueddeutsche.de##[data-component="outbrain"]
