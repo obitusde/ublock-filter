@@ -58,8 +58,8 @@ Praktischer Trick: Auf einer geöffneten Seite derselben Domain mit `fetch()` un
   - "Easy Fox" ist Spiel-Artwork, nicht blocken.
   - Eigenwerbe-Absätze (`p > em > a`) werden über das Link-Ziel erkannt: community.golem.de/invites, karrierewelt-newsletter, service.golem.de/products/shop. `p.go-article-end` ist auch der echte letzte Textabsatz, also nie allein verwenden.
 - **heise.de:** `www.heise.de##` und `heise.de##` sind gleichwertig. Die Notice-Box (`<details>`) ist verifiziert.
-  - Artikelbilder: `a-lightbox.article-image` > `figure` mit `p.a-caption__source` ("(Bild: … / Shutterstock.com)"). Stockfotos über den Credit-Text, analog golem. Stand 14.10. nur Shutterstock (ca. 30 % der Artikel), KI-Bilder ("… / KI / heise medien") bewusst nicht gefiltert.
-  - Die sichtbare Kopfleiste ist `#topnavimodule` (stabile ID), nicht `header.theme-ho`. Darin verlinken "Abo"-Button und Menüpunkt "heise+" beide auf `/plus`.
+  - Artikelbilder: `a-lightbox.article-image` > `figure` mit `p.a-caption__source` ("(Bild: … / Shutterstock.com)"). Stockfotos und KI-Bilder über den Credit-Text, analog golem. Stand 14.10. nur Shutterstock (ca. 30 % der Artikel); KI-Bilder ("… / KI / heise medien", ca. 17 %) über `:has-text(/\bKI\b/)`.
+  - Kopfbereich mobil = zwei Leisten: oben `#topnavimodule` (Logo, Abo, Menü, Suche; stabile ID), darunter die Ressort-Leiste `header.theme-ho` (in `.ho-text.ho-bg.shadow-modules.z-50`). Beide werden ausgeblendet.
 - **srf.ch:**
   - `.expandable-box` NICHT blocken, das ist echter Inhalt.
   - "Diskutieren Sie mit" besteht aus `h3.article-subheading` und `.article-element--bleed` mit Embed (iframe dialog.srf.ch). `.article-element--bleed` wird auch für andere Embeds und Bilder benutzt, deshalb über den Embed-Titel im Attribut `data-cmp-protected-embed` eingrenzen.

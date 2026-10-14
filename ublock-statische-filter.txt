@@ -1,6 +1,6 @@
 ! Title: Mobile News Reading
 ! Expires: 1 day
-! Version: 2026.10.14.1
+! Version: 2026.10.14.2
 ! Homepage: https://github.com/obitusde/ublock-filter
 ! ==============================================================================
 ! uBlock Origin Filterliste - Mobile News Reading Focus
@@ -124,8 +124,13 @@ heise.de###article-page-upscore
 heise.de###wtma_teaser_ho_vertrieb_inline_branding
 heise.de##.a-u-inline
 heise.de##.ho-text.ho-bg.shadow-modules.z-50
-! Kopfbereich (Logo, Anmelden, Suche)
+! Ressort-Leiste (heise+ | Newsticker | Security ...), sitzt in der
+! .ho-text.ho-bg.shadow-modules.z-50 darueber
 heise.de##header.theme-ho
+! Komplette Kopfleiste oben (Logo, Abo-Button, Menue, Suche) - Nutzer 14.10.
+! Verifiziert 14.10.: stabile ID, 1 Treffer auf Start-, Ressort- und
+! Artikelseiten, kein Artikeltext. Ersetzt die Abo-Button-Regel von 14.10.
+heise.de###topnavimodule
 ! Fixierter heise+-Abo-Werbebalken unten rechts
 heise.de##a-sticky-footer
 ! Wildcard match replacing static image URL string
@@ -139,10 +144,6 @@ heise.de##.a-u-mb-2.a-box--notice.a-box--full-bordered.a-box.notice-banner
 ! sauber nur die "Beliebte Bestenlisten"-Box, keine Artikelabsaetze.
 heise.de##div.a-layout:has(h2:has-text("Bestenliste"))
 heise.de##[class*="bestenliste"]
-! "Abo"-Button oben rechts in der Kopfleiste (Nutzer 14.10.). Verifiziert
-! 14.10.: 1 Treffer auf Start-, Ressort- und Artikelseiten. Der gleich
-! verlinkte Menuepunkt "heise+" bleibt (daher :has-text).
-heise.de###topnavimodule a[href="/plus"]:has-text(Abo)
 ! Stockfotos raus (Nutzer 14.10.): Artikelbilder sitzen in a-lightbox.article-
 ! image, der Bildnachweis in .a-caption__source. Verifiziert 14.10. an 80
 ! Artikeln: 25 Treffer, je max. 1 (Aufmacherbild), nur Bild + Bildunterschrift,
@@ -156,6 +157,11 @@ heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Pixabay"))
 heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Unsplash"))
 heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Pexels"))
 heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Freepik"))
+! KI-Bilder (Nutzer 14.10.): Bildnachweis "… / KI / heise medien", "KI / iX",
+! "heise online/KI-generiert" usw. Verifiziert 14.10. an 150 Artikeln: 26
+! Treffer, je max. 1 (Aufmacherbild), alle 27 "KI"-Bildnachweise waren
+! tatsaechlich KI-Bilder. Regex mit Wortgrenze, damit z.B. "KIT" nicht trifft.
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text(/\bKI\b/))
 
 ! --- srf.ch (verifiziert & korrigiert 27.08.2026, ergaenzt 13.10.2026) ---
 ! Bleibt sichtbar: Titel/Lead/Autor (header.article-header) und der komplette
