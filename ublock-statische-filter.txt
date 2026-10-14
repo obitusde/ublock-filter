@@ -1,6 +1,6 @@
 ! Title: Mobile News Reading
 ! Expires: 1 day
-! Version: 2026.10.13.2
+! Version: 2026.10.14.1
 ! Homepage: https://github.com/obitusde/ublock-filter
 ! ==============================================================================
 ! uBlock Origin Filterliste - Mobile News Reading Focus
@@ -115,7 +115,7 @@ golem.de##p:has(> em > a[href*="karrierewelt.golem.de/pages/golem-karrierewelt-n
 ! E-Paper-Shop-Hinweis
 golem.de##p:has(> em > a[href*="service.golem.de/products/shop"])
 
-! --- heise.de (verifiziert 26.08.2026, ergaenzt 22.09.2026) ---
+! --- heise.de (verifiziert 26.08.2026, ergaenzt 14.10.2026) ---
 heise.de##.footer
 heise.de##.article-footer
 heise.de##.article-layout__footer
@@ -139,6 +139,23 @@ heise.de##.a-u-mb-2.a-box--notice.a-box--full-bordered.a-box.notice-banner
 ! sauber nur die "Beliebte Bestenlisten"-Box, keine Artikelabsaetze.
 heise.de##div.a-layout:has(h2:has-text("Bestenliste"))
 heise.de##[class*="bestenliste"]
+! "Abo"-Button oben rechts in der Kopfleiste (Nutzer 14.10.). Verifiziert
+! 14.10.: 1 Treffer auf Start-, Ressort- und Artikelseiten. Der gleich
+! verlinkte Menuepunkt "heise+" bleibt (daher :has-text).
+heise.de###topnavimodule a[href="/plus"]:has-text(Abo)
+! Stockfotos raus (Nutzer 14.10.): Artikelbilder sitzen in a-lightbox.article-
+! image, der Bildnachweis in .a-caption__source. Verifiziert 14.10. an 80
+! Artikeln: 25 Treffer, je max. 1 (Aufmacherbild), nur Bild + Bildunterschrift,
+! 0 auf Uebersichtsseiten. Bei heise kam nur Shutterstock vor, die uebrigen
+! Anbieter vorsorglich wie bei golem.de.
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Shutterstock"))
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("iStock"))
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Adobe Stock"))
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Getty Images"))
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Pixabay"))
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Unsplash"))
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Pexels"))
+heise.de##a-lightbox.article-image:has(.a-caption__source:has-text("Freepik"))
 
 ! --- srf.ch (verifiziert & korrigiert 27.08.2026, ergaenzt 13.10.2026) ---
 ! Bleibt sichtbar: Titel/Lead/Autor (header.article-header) und der komplette
