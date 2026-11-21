@@ -41,7 +41,7 @@ Neue oder geänderte Regeln vor dem Einbauen live prüfen. Geprüft wird mit mob
 
 Praktischer Trick: Auf einer geöffneten Seite derselben Domain mit `fetch()` und `DOMParser` 20–40 Artikel auf einmal prüfen. Das geht schneller als jede Seite einzeln zu öffnen.
 
-## Seitenwissen (Stand 13.10.2026)
+## Seitenwissen (Stand 21.11.2026)
 
 - **20min.ch:** `div[data-testid="InfoBox"]` trägt sowohl die erwünschte "Darum gehts"-Zusammenfassung als auch Werbe- und Hinweisboxen. Darum über Icon (`info-box-bell`) oder Text eingrenzen. Die FR-Ausgabe hat andere Hash-Klassen. Der Lesefortschrittsbalken ist `.sc-835cd513-6`.
 - **anibis.ch / tutti.ch:** gleiche MUI-Plattform, gleiche Hashes.
@@ -62,12 +62,15 @@ Praktischer Trick: Auf einer geöffneten Seite derselben Domain mit `fetch()` un
   - Kopfbereich mobil = zwei Leisten: oben `#topnavimodule` (Logo, Abo, Menü, Suche; stabile ID), darunter die Ressort-Leiste `header.theme-ho` (in `.ho-text.ho-bg.shadow-modules.z-50`). Beide werden ausgeblendet.
 - **srf.ch:**
   - `.expandable-box` NICHT blocken, das ist echter Inhalt.
+  - "Passend zum Thema" (`div.js-related-items-list`, per JS nachgeladen) sitzt allein in einem `.article-element--bleed`-Wrapper, deshalb `:has(> .js-related-items-list)`.
+  - Hervorgehobene Zitate (`.article-element--inset-quote`) werden komplett geblockt, auch mit Autorenangabe. Zitate im Fliesstext bleiben.
   - "Diskutieren Sie mit" besteht aus `h3.article-subheading` und `.article-element--bleed` mit Embed (iframe dialog.srf.ch). `.article-element--bleed` wird auch für andere Embeds und Bilder benutzt, deshalb über den Embed-Titel im Attribut `data-cmp-protected-embed` eingrenzen.
 - **tagesschau.de:** Bei "Mehr zum Thema"/"Mehr von" greift nur die Variante `div[class*="columns"]:has-text(…)`.
 - **thelausanneguide.com:** Die Nutzerregel trifft den kompletten `<footer>` (Newsletter). `footer` ist zusätzlich als stabile Variante drin.
 - **toppreise.ch:** `#tpFrame > .d-md-none` entspricht `div#advertising_mobile` (mobiler Werbeplatz). Beide Regeln sind drin.
 - **zeit.de:**
   - `.zoner-injection-NSDAP` ist die "NS-Akten"-Rechercheservice-Box, verifiziert mit Login auf einem Z+-Artikel. Das alte Pauschal-`[class*="zoner-injection"]` ist tot.
+  - Autorenbox: `aside.portraitbox` mit `.portraitbox__follow-button` ("Folgen") ist der Autor und wird geblockt. Portraitboxen ohne Knopf gehören zu Interviewpartnern und bleiben.
   - `.volume-teaser` hat der Nutzer am Gerät bestätigt, in der Sandbox gab es 0 Treffer. Behalten.
 - **gmx.net:** Die Sandbox sieht nur die Consent-Wall (zustimmen oder zahlen), `.regbanner` war nicht prüfbar.
 - **stern.de:** `paid-toaster` wird per JavaScript eingeblendet und war nicht prüfbar.

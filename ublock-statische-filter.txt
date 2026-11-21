@@ -1,6 +1,6 @@
 ! Title: Mobile News Reading
 ! Expires: 1 day
-! Version: 2026.10.14.2
+! Version: 2026.11.21.1
 ! Homepage: https://github.com/obitusde/ublock-filter
 ! ==============================================================================
 ! uBlock Origin Filterliste - Mobile News Reading Focus
@@ -165,9 +165,11 @@ heise.de##a-lightbox.article-image:has(.a-caption__source:has-text(/\bKI\b/))
 
 ! --- srf.ch (verifiziert & korrigiert 27.08.2026, ergaenzt 13.10.2026) ---
 ! Bleibt sichtbar: Titel/Lead/Autor (header.article-header) und der komplette
-! Fliesstext inkl. Bilder, Zwischentitel, Zitate, aufklappbare Infoboxen
-! (section.articlepage__article-content). .expandable-box NICHT blocken -
-! das sind Infoboxen im Artikeltext selbst, kein Rauschen.
+! Fliesstext inkl. Bilder, Zwischentitel, Zitate im Fliesstext, aufklappbare
+! Infoboxen (section.articlepage__article-content). .expandable-box NICHT
+! blocken - das sind Infoboxen im Artikeltext selbst, kein Rauschen.
+! Ausnahme: hervorgehobene Zitat-Kaesten (.article-element--inset-quote) sind
+! meist Wiederholungen des Textes und werden geblockt (Nutzer 18.11.).
 srf.ch##header.masthead
 srf.ch##footer.footer
 srf.ch##.js-player-modal
@@ -193,6 +195,12 @@ srf.ch##.js-autobox-collection
 ! daher ueber den Embed-Titel eingegrenzt.
 srf.ch##h3.article-subheading:has-text("Diskutieren Sie mit")
 srf.ch##.article-element--bleed:has(.js-cmp-embed[data-cmp-protected-embed*="Diskutieren Sie mit"])
+! Neu 21.11.2026, verifiziert (60 Artikel, 15 Treffer): "Passend zum Thema"-Box,
+! per JS nachgeladen. Wrapper .article-element--bleed hat sonst keine Kinder.
+srf.ch##.article-element--bleed:has(> .js-related-items-list)
+! Neu 21.11.2026, verifiziert (50 Artikel, 28 Zitate, 18 davon woertlich im
+! Text): hervorgehobene Zitat-Kaesten mitten im Artikel (auch mit Autorenangabe).
+srf.ch##.article-element--inset-quote
 
 ! --- tagesschau.de (bereinigt & ergaenzt 26.08.2026) ---
 ! Kopfbereich, Fusszeile, Sendungshinweis, Autorenzeile, Teilen-Buttons unten
@@ -260,6 +268,10 @@ zeit.de##.zoner-injection-NSDAP
 ! Nutzer 21.09.: am eigenen Geraet per Screenshot bestaetigt. In der Sandbox
 ! 22.09. an zwei Artikeln 0 Treffer (A/B-Test o.ae.) - bewusst behalten.
 zeit.de##.volume-teaser
+! Neu 21.11.2026, verifiziert (40 Artikel, 16 Portraitboxen): Autorenbox mit
+! "Folgen"-Knopf (10 Treffer). Boxen zu Interviewpartnern haben keinen Knopf
+! (6) und bleiben sichtbar.
+zeit.de##aside.portraitbox:has(.portraitbox__follow-button)
 ! Tote Regeln entfernt 27.08.2026: .jobbox-ticker, [class*="zoner-injection"]
 
 ! ==============================================================================
