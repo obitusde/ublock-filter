@@ -1,6 +1,6 @@
 ! Title: Mobile News Reading
 ! Expires: 1 day
-! Version: 2026.11.24.1
+! Version: 2026.11.24.2
 ! Homepage: https://github.com/obitusde/ublock-filter
 ! ==============================================================================
 ! uBlock Origin Filterliste - Mobile News Reading Focus
@@ -58,8 +58,18 @@ anibis.ch##.mui-style-t4u9pe.MuiBox-root
 ! Bleibt sichtbar: Artikeltitel + kompletter Fliesstext inkl. Bilder.
 ! "header" entfernt auch die "Zur App / Schneller finden und bestellen"-
 ! Nagbanner ganz oben, da diese im selben <header>-Element sitzt.
-digitec.ch##header
-digitec.ch###pageFooter
+! WICHTIG 24.11.2026: Seit dem Redeploy setzt digitec.ch eine strenge CSP
+! (style-src ohne "unsafe-inline", nur mit Nonce). Normale CSS-Filter (einfache
+! ##selector-Regeln ohne :has()/:has-text()) werden von uBlock als <style>-Tag
+! eingefuegt und von dieser CSP blockiert - sie wirken NICHT mehr, auch wenn
+! sie "aktiv" sind. Verifiziert per Test: ein manuell eingefuegtes
+! "header{display:none!important}" hat keine Wirkung, ein direktes
+! element.remove() aber schon. Darum hier ":remove()" statt reiner CSS-Regel -
+! das entfernt das Element per JS und ist von der CSP unabhaengig. Alle
+! :has()-Regeln unten sind automatisch "prozedural" und daher schon JS-basiert,
+! die sind von diesem Problem nicht betroffen (Teaser-Regel verifiziert ok).
+digitec.ch##header:remove()
+digitec.ch###pageFooter:remove()
 ! Seit dem Redeploy vom 24.11.2026 sind ALLE alten y*-Hash-Klassen weg (0 Treffer
 ! im gesamten HTML) und wurden entfernt: .yJuh6LU, .yOwfOx2, .yd6GJaF > section
 ! .yI0wRwL:nth-of-type(2|3), .ylyXkc41, .yVsAy41. Ersatz ohne Hashes:
