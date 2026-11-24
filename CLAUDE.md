@@ -47,10 +47,9 @@ Praktischer Trick: Auf einer geöffneten Seite derselben Domain mit `fetch()` un
 - **anibis.ch / tutti.ch:** gleiche MUI-Plattform, gleiche Hashes.
   - `.mui-style-t4u9pe` ist der Block "Ähnliche Suchanfragen" unter Inseratslisten (verifiziert auf beiden Seiten).
   - `xtxbqo`, `1x1x4w3` und `6ka9oi` waren in der Sandbox nicht reproduzierbar (Startseite, Listen und Inserate geprüft). Vermutlich nur eingeloggt oder in einem bestimmten Zustand sichtbar.
-- **digitec.ch** (Magazin):
-  - `section.yI0wRwL` ist der Artikeltext **und** Karussell/Kommentare. Darum `.yd6GJaF > section.yI0wRwL:nth-of-type(2|3)`.
-  - `section.yI0wRwL > .ylyXkc41` sind eingeschobene Teaserkarten (verifiziert).
-  - `.yVsAy41` hatte 0 Treffer, Hash vermutlich geändert.
+- **digitec.ch** (Magazin, Redeploy 24.11.2026 hat alle y*-Hash-Klassen ersetzt, die alten Regeln waren tot und wurden entfernt):
+  - Teaserkarten im Text sind `<ul>` direkt im Artikel-`<section>` mit Link auf `/de/page/...`. Normale Listen im Text bleiben.
+  - Like-Widget über `#likes`, Autorenbox über den `mailto:`-Link, Karussell über `aria-label="Alle Magazinbeiträge anzeigen"`, Kommentare über `#comments`.
   - `header` und `#pageFooter` sind stabil.
 - **golem.de:**
   - Jedes Artikelbild ist `figure.go-media` mit `span.go-media__credit` in der `figcaption`. Generische Bilder werden über den Credit-Text erkannt (Pixabay, Shutterstock, iStock, Adobe Stock, Unsplash, Pexels, Freepik, Getty Images, KI-generiert, "(erzeugt mit").
@@ -78,5 +77,5 @@ Praktischer Trick: Auf einer geöffneten Seite derselben Domain mit `fetch()` un
 ## Offene Punkte
 
 - **Ungetestete Altregeln** (könnten tot oder zu breit sein): Süddeutsche (3), Portfolio Sharesight, Google Apps Script, Focus.de, AllMusic, NLA catalogue (2), bib-ostschweiz/genios. Prüfen nur, wenn der Nutzer es wünscht.
-- **Ältere Hash-Regeln** (20min `sc-*`, digitec `y*`, Tutti): nur neu prüfen, wenn auf der Seite etwas auffällt.
-- **Nicht bestätigte Regeln:** digitec `.yVsAy41`, Tutti/anibis `xtxbqo`/`1x1x4w3`/`6ka9oi`, gmx `.regbanner`, stern `paid-toaster`. Bleiben vorerst drin.
+- **Ältere Hash-Regeln** (20min `sc-*`, Tutti): nur neu prüfen, wenn auf der Seite etwas auffällt.
+- **Nicht bestätigte Regeln:** Tutti/anibis `xtxbqo`/`1x1x4w3`/`6ka9oi`, gmx `.regbanner`, stern `paid-toaster`. Bleiben vorerst drin.

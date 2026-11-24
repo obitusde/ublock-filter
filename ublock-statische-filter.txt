@@ -1,6 +1,6 @@
 ! Title: Mobile News Reading
 ! Expires: 1 day
-! Version: 2026.11.21.1
+! Version: 2026.11.24.1
 ! Homepage: https://github.com/obitusde/ublock-filter
 ! ==============================================================================
 ! uBlock Origin Filterliste - Mobile News Reading Focus
@@ -54,30 +54,31 @@ anibis.ch##.mui-style-xtxbqo.MuiBox-root
 ! Inseratsliste (12/12 Listen, 1 Treffer, nur Links)
 anibis.ch##.mui-style-t4u9pe.MuiBox-root
 
-! --- digitec.ch (verifiziert 27.08.2026, ergaenzt 13.10.2026) ---
+! --- digitec.ch (verifiziert 24.11.2026, nach Redeploy neu aufgebaut) ---
 ! Bleibt sichtbar: Artikeltitel + kompletter Fliesstext inkl. Bilder.
 ! "header" entfernt auch die "Zur App / Schneller finden und bestellen"-
 ! Nagbanner ganz oben, da diese im selben <header>-Element sitzt.
 digitec.ch##header
 digitec.ch###pageFooter
-! Autoren-Box + "Thema folgen"-Buttons direkt unter dem Artikeltext
-digitec.ch##.yJuh6LU
-! "Dieser Artikel gefaellt mir"-Like-Widget
-digitec.ch##.yOwfOx2
-! "Weitere Beitraege aus dem Magazin"-Karussell und Kommentarbereich - beide
-! nutzen dieselbe generische Section-Klasse wie der Artikeltext selbst, daher
-! ueber Geschwister-Position (:nth-of-type) statt der Klasse allein isoliert.
-digitec.ch##.yd6GJaF > section.yI0wRwL:nth-of-type(2)
-digitec.ch##.yd6GJaF > section.yI0wRwL:nth-of-type(3)
-! Eingeschobene Artikel-Teaserkarten im Fliesstext (Nutzer 16.09.), verifiziert
-! 13.10.: 0-3 Treffer pro Artikel, keine <p>, 87-163 Zeichen, Text bleibt.
-digitec.ch##section.yI0wRwL > .ylyXkc41
-! Nutzer 16.09., NICHT bestaetigt: 0 Treffer auf Start-, Magazin-, Artikel-,
-! Such- und Warenkorbseite. Nur das aehnliche "yVsAy411" existiert (leerer
-! Platzhalter ueber der Fusszeile). Evtl. neuer Hash - bei Bedarf neu picken.
-digitec.ch##.yVsAy41
-! ACHTUNG: alle y*-Klassen sind gehashte CSS-Modul-Klassen und koennen sich bei
-! jedem digitec-Redeploy aendern. "header" und "#pageFooter" sind stabil.
+! Seit dem Redeploy vom 24.11.2026 sind ALLE alten y*-Hash-Klassen weg (0 Treffer
+! im gesamten HTML) und wurden entfernt: .yJuh6LU, .yOwfOx2, .yd6GJaF > section
+! .yI0wRwL:nth-of-type(2|3), .ylyXkc41, .yVsAy41. Ersatz ohne Hashes:
+! Eingeschobene Artikel-Teaserkarten im Fliesstext (<ul> direkt im Artikel-
+! <section>, mit Link auf /de/page/...). Verifiziert 24.11., 40 Artikel: 29
+! Treffer, keine <p>, 78-131 Zeichen. Normale Listen im Fliesstext bleiben.
+digitec.ch##section > ul:has(> li > div[role="presentation"] a[href^="/de/page/"])
+! "Dieser Artikel gefaellt mir"-Like-Widget (Anker-ID #likes)
+digitec.ch##div:has(> #likes)
+! Autoren-Box mit "Thema folgen"-Buttons unter dem Artikeltext (enthaelt mailto-
+! Link). 1 Treffer pro Artikel, nur Autorentext.
+digitec.ch##section > div:has(a[href^="mailto:"])
+! "Weitere Beitraege aus dem Magazin"-Karussell und Kommentarbereich
+! (eigene <section>, ueber Link-Titel bzw. Anker-ID #comments erkannt)
+digitec.ch##section:has(a[aria-label="Alle Magazinbeiträge anzeigen"])
+digitec.ch##section:has(> #comments)
+! ACHTUNG: alle y*-Klassen sind gehashte CSS-Modul-Klassen und aendern sich bei
+! jedem digitec-Redeploy. Darum hier nur header, #pageFooter, IDs, href- und
+! aria-label-Selektoren verwenden.
 
 ! --- golem.de (verifiziert 27.08.2026, ergaenzt 13.10.2026) ---
 golem.de##.go-footer
