@@ -1,6 +1,6 @@
 ! Title: Mobile News Reading
 ! Expires: 1 day
-! Version: 2026.11.24.2
+! Version: 2026.11.24.3
 ! Homepage: https://github.com/obitusde/ublock-filter
 ! ==============================================================================
 ! uBlock Origin Filterliste - Mobile News Reading Focus
@@ -68,8 +68,14 @@ anibis.ch##.mui-style-t4u9pe.MuiBox-root
 ! das entfernt das Element per JS und ist von der CSP unabhaengig. Alle
 ! :has()-Regeln unten sind automatisch "prozedural" und daher schon JS-basiert,
 ! die sind von diesem Problem nicht betroffen (Teaser-Regel verifiziert ok).
-digitec.ch##header:remove()
-digitec.ch###pageFooter:remove()
+! WICHTIG 24.11.2026 (korrigiert): "header" und "#pageFooter" existieren auf
+! ALLEN digitec.ch-Seiten (Shop, Suche, Warenkorb), nicht nur im Magazin. Die
+! alten Hash-Klassen trafen zufaellig nur Magazin-Artikel, weil die Komponente
+! dort nur existierte - "header"/"#pageFooter" treffen aber ueberall. Darum
+! mit :matches-path() auf Artikelseiten (/de/page/...) eingegrenzt. Nutzer
+! braucht den Header beim Suchen/Einkaufen (24.11.2026).
+digitec.ch##header:remove():matches-path(/^\/de\/page\//)
+digitec.ch###pageFooter:remove():matches-path(/^\/de\/page\//)
 ! Seit dem Redeploy vom 24.11.2026 sind ALLE alten y*-Hash-Klassen weg (0 Treffer
 ! im gesamten HTML) und wurden entfernt: .yJuh6LU, .yOwfOx2, .yd6GJaF > section
 ! .yI0wRwL:nth-of-type(2|3), .ylyXkc41, .yVsAy41. Ersatz ohne Hashes:
