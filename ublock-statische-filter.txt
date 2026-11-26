@@ -1,6 +1,6 @@
 ! Title: Mobile News Reading
 ! Expires: 1 day
-! Version: 2026.11.24.3
+! Version: 2026.11.26.1
 ! Homepage: https://github.com/obitusde/ublock-filter
 ! ==============================================================================
 ! uBlock Origin Filterliste - Mobile News Reading Focus
@@ -255,18 +255,39 @@ thelausanneguide.com##footer
 toppreise.ch###tpFrame > .d-md-none
 toppreise.ch###advertising_mobile
 
-! --- tutti.ch (27.08.2026 per Element-Picker am Geraet, ergaenzt 13.10.2026) ---
+! --- tutti.ch (27.08.2026 per Element-Picker am Geraet, ergaenzt 13.10. + 26.11.2026) ---
 ! Alte generische Regeln ([class*="phishing"] etc.) entfernt (griffen nicht
 ! mehr). ACHTUNG: MUI/Emotion-Hash-Klassen aendern sich potenziell bei jedem
 ! Tutti-Redeploy - nach groesseren Aenderungen an der Seite erneut pruefen.
-! Nicht reproduzierbar in der Sandbox (Nutzer 27.08. / 09.10.): 6ka9oi, 1x1x4w3,
-! xtxbqo
+! 26.11.2026: Nutzer hat mit dem uBlock-Element-Picker am Geraet live
+! nachgepickt. Die Hash-Fragmente (6ka9oi, 1x1x4w3, t4u9pe) sind dieselben wie
+! vorher, aber tutti verwendet jetzt teils "css-" statt "mui-style-" als
+! Praefix - deshalb griffen die alten Regeln in der Sandbox nie. Alte Regeln
+! bleiben sicherheitshalber stehen (Seite nutzt offenbar beide Praefixe
+! gemischt), neue Picker-Regeln ergaenzt.
+! Nicht reproduzierbar (weder alt noch per Picker bestaetigt): xtxbqo
 tutti.ch##.e1vcw3q50.mui-style-6ka9oi
 tutti.ch##.mui-style-1x1x4w3.MuiBox-root
 tutti.ch##.mui-style-xtxbqo.MuiBox-root
 ! Verifiziert 13.10.: Block "Aehnliche Suchanfragen" unten auf jeder
 ! Inseratsliste (14/14 Listen, 1 Treffer, nur Links, keine Inserate)
 tutti.ch##.mui-style-t4u9pe.MuiBox-root
+! Vom Nutzer 26.11.2026 per Element-Picker bestaetigt (css-Praefix-Variante
+! derselben drei Elemente). "ett6jes0" ist selbst wieder eine generierte
+! Klasse und kann beim naechsten Redeploy erneut wechseln - sollte diese
+! Regel ausfallen, zuerst mit ".mui-style-6ka9oi" allein probieren.
+tutti.ch##.css-1x1x4w3.MuiBox-root
+tutti.ch##.ett6jes0.mui-style-6ka9oi
+tutti.ch##.css-t4u9pe.MuiBox-root
+
+! --- x.com (26.11.2026, per Element-Picker am Geraet) ---
+! "App oeffnen"/"Alle Antworten anzeigen"-Leiste am unteren Bildschirmrand auf
+! oeffentlichen Beitragsseiten (x.com/<user>/status/<id>) fuer nicht
+! eingeloggte Nutzer. Vom Nutzer direkt mit dem uBlock-Element-Picker
+! ausgewaehlt. Tailwind-Utility-Klassen (keine Hash-Klassen), daher
+! voraussichtlich stabiler als bei MUI/Emotion-Seiten - koennen sich aber bei
+! einem Layout-Redesign trotzdem aendern.
+x.com##.pt-3.px-6.gap-4.flex-col.min-w-0.w-full.flex.z-40.isolate.bottom-0.fixed
 
 ! --- zeit.de (verifiziert 27.08.2026, ergaenzt 22.09.2026) ---
 zeit.de##.footer
